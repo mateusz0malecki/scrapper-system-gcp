@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pracuj-subscriber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: job-offers-pracuj-subscriber
+  template:
+    metadata:
+      labels:
+        app: job-offers-pracuj-subscriber
+    spec:
+      containers:
+        - name: app
+          image: gcr.io/scrapper-system/pracuj-offers-db-handler:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+        - name: cloud-sql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout"
+            - "-instances=scrapper-system:europe-central2:job-offers-pracuj-db=tcp:5432"
+            - "-credential_file=/secrets/service_account.json"
+          securityContext:
+            runAsNonRoot: true
+          volumeMounts:
+            - name: sql-instance-secret-volume
+              mountPath: /secrets/
+              readOnly: true
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1"
+      volumes:
+        - name: sql-instance-secret-volume
+          secret:
+            secretName: sql-instance-secret

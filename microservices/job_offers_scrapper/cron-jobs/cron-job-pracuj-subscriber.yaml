@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-job-pracuj-subscriber
+spec:
+  schedule: "0 23 * * 0"
+  concurrencyPolicy: Allow
+  startingDeadlineSeconds: 100
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cron-job-pracuj-subscriber
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - curl -X POST http://34.118.77.136
+          restartPolicy: Never

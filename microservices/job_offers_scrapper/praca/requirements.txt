@@ -1,0 +1,6 @@
+requests
+google-cloud-storage
+beautifulsoup4
+uvicorn
+fastapi
+pydantic
