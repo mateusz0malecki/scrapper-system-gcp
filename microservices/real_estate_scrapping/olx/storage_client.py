@@ -1,4 +1,12 @@
+import os
+from functools import lru_cache
 from google.cloud import storage
+
+
+CREDENTIALS_FILE = 'credentials-storage-scrapper.json'
+BLOB_NAME = f'real_estate_offers_olx.json'
+BUCKET_NAME = 'real-estate-olx'
+PATH_TO_FILE = f'{os.getcwd()}/offers.json'
 
 
 class StorageClient:
@@ -14,3 +22,8 @@ class StorageClient:
         blob = self._bucket.blob(self._blob_name)
         blob.upload_from_filename(self._path_to_file)
         print(f'File uploaded.')
+
+
+@lru_cache
+def get_client():
+    return StorageClient(CREDENTIALS_FILE, BLOB_NAME, BUCKET_NAME, PATH_TO_FILE)

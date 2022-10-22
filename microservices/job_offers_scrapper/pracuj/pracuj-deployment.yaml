@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: gcr.io/scrapper-system/pracuj-offers-scrapper:latest
+          image: gcr.io/scrapper-system/pracuj-offers-scrapper:v2
           ports:
             - containerPort: 5000
           env:

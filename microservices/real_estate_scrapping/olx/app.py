@@ -2,31 +2,24 @@ import os
 import json
 import uvicorn
 from datetime import datetime
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 
 from scrapper_offer import OffersScrapper
 from scrapper_links import olx_get_links_to_offers
-from storage_client import StorageClient
-
+from storage_client import get_client, StorageClient, PATH_TO_FILE
 
 now = datetime.now()
-
-CREDENTIALS_FILE = 'credentials-storage-scrapper.json'
-BLOB_NAME = f'real_estate_offers_olx.json'
-BUCKET_NAME = 'real-estate-olx'
-PATH_TO_FILE = f'{os.getcwd()}/offers.json'
 
 app = FastAPI()
 
 
 @app.get('/')
-def index():
+def index(client: StorageClient = Depends(get_client)):
     start = datetime.utcnow()
 
     urls = olx_get_links_to_offers()
     results_list = []
 
-    client = StorageClient(CREDENTIALS_FILE, BLOB_NAME, BUCKET_NAME, PATH_TO_FILE)
     for i, url in enumerate(urls):
         print(f"{i} / {len(urls)} | {url}")
         offer_scraper = OffersScrapper(url)

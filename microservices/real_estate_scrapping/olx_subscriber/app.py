@@ -3,31 +3,25 @@ import sqlalchemy.orm
 import uvicorn
 import os
 from datetime import datetime
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 
-from storage_client import StorageClient
+from storage_client import get_client, StorageClient
 from db_models import Estate
 from database import connect_tcp_socket, Base
 
 now = datetime.now()
 
-CREDENTIALS_FILE = 'credentials-storage-scrapper.json'
-BLOB_NAME = f'real_estate_offers_olx.json'
-BUCKET_NAME = 'real-estate-olx'
-
 engine = connect_tcp_socket()
-
 app = FastAPI()
 
 
 @app.post('/')
-def handle_db():
+def handle_db(client: StorageClient = Depends(get_client)):
     start = datetime.utcnow()
     with engine.connect() as db:
         Base.metadata.create_all(bind=engine)
         session_local = sqlalchemy.orm.sessionmaker(autocommit=False, autoflush=False, bind=engine)
         db_session = session_local()
-        client = StorageClient(CREDENTIALS_FILE, BLOB_NAME, BUCKET_NAME)
         content = json.loads(client.download_blob_into_memory())
 
         for element in content:

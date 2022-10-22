@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: gcr.io/scrapper-system/praca-offers-db-handler:latest
+          image: gcr.io/scrapper-system/praca-offers-db-handler:v2
           ports:
             - containerPort: 5000
           env:
@@ -37,7 +37,7 @@ spec:
           resources:
             requests:
               memory: "2Gi"
-              cpu: "1"
+              cpu: "0.25"
       volumes:
         - name: sql-instance-secret-volume
           secret:

@@ -1,4 +1,9 @@
+from functools import lru_cache
 from google.cloud import storage
+
+CREDENTIALS_FILE = 'credentials-storage-scrapper.json'
+BLOB_NAME = f'real_estate_offers_olx.json'
+BUCKET_NAME = 'real-estate-olx'
 
 
 class StorageClient:
@@ -14,3 +19,8 @@ class StorageClient:
         contents = blob.download_as_string()
         print("Downloaded storage object {} from bucket {}.".format(self._blob_name, self._bucket_name))
         return contents
+
+
+@lru_cache
+def get_client():
+    return StorageClient(CREDENTIALS_FILE, BLOB_NAME, BUCKET_NAME)

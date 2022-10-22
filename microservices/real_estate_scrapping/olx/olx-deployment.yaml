@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: gcr.io/scrapper-system/real-estate-offers-olx
+          image: gcr.io/scrapper-system/real-estate-offers-olx:v1
           ports:
             - containerPort: 5000
           env:
