@@ -1,25 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: olx-subscriber
+  name: pracuj-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: real-estate-offers-olx-subscriber
+      app1: job-offers-pracuj
+      app2: job-offers-pracuj-subscriber
   template:
     metadata:
       labels:
-        app: real-estate-offers-olx-subscriber
+        app1: job-offers-pracuj
+        app2: job-offers-pracuj-subscriber
     spec:
       containers:
-        - name: app
-          image: gcr.io/scrapper-system/real-estate-offers-olx-db-handler:v1
+        - name: app1
+          image: gcr.io/scrapper-system/pracuj-offers-scrapper:v2
           ports:
             - containerPort: 5000
           env:
             - name: PORT
               value: "5000"
+        - name: app2
+          image: gcr.io/scrapper-system/pracuj-offers-db-handler:v2
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5001"
         - name: cloud-sql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.28.0
           command:
@@ -37,7 +46,7 @@ spec:
           resources:
             requests:
               memory: "2Gi"
-              cpu: "1"
+              cpu: "0.25"
       volumes:
         - name: sql-instance-secret-volume
           secret:

@@ -1,6 +1,0 @@
-requests
-google-cloud-storage
-uvicorn
-sqlalchemy
-pg8000
-fastapi
