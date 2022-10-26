@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.pracujScrapper.name }}
+spec:
+  type: {{ .Values.service.pracujScrapper.type }}
+  selector:
+    app1: job-offers-pracuj
+  ports:
+    - port: {{ .Values.service.pracujScrapper.port }}
+      targetPort: {{ .Values.service.pracujScrapper.targetPort }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.pracujSubscriber.name }}
+spec:
+  type: {{ .Values.service.pracujSubscriber.type }}
+  selector:
+    app2: job-offers-pracuj-subscriber
+  ports:
+    - port: {{ .Values.service.pracujSubscriber.port }}
+      targetPort: {{ .Values.service.pracujSubscriber.targetPort }}
+
+

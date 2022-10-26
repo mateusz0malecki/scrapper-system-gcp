@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pracuj-deployment
+spec:
+  {{ if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{ end }}
+  selector:
+    matchLabels:
+      app1: job-offers-pracuj
+      app2: job-offers-pracuj-subscriber
+  template:
+    metadata:
+      labels:
+        app1: job-offers-pracuj
+        app2: job-offers-pracuj-subscriber
+    spec:
+      serviceAccountName: {{ include "scrapper-system-chart.serviceAccountName" . }}
+      containers:
+        - name: {{ .Values.image.pracujScrapper.name }}
+          image: {{ .Values.image.pracujScrapper.image }}:{{ .Values.image.pracujScrapper.tag }}
+          ports:
+            - containerPort: {{ .Values.image.pracujScrapper.containerPort }}
+          env:
+            - name: PORT
+              value: {{ .Values.image.pracujScrapper.containerPort }}
+        - name: {{ .Values.image.pracujSubscriber.name }}
+          image: {{ .Values.image.pracujSubscriber.image }}:{{ .Values.image.pracujSubscriber.tag }}
+          ports:
+            - containerPort: {{ .Values.image.pracujSubscriber.containerPort }}
+          env:
+            - name: PORT
+              value: {{ .Values.image.pracujSubscriber.containerPort }}
+        - name: {{ .Values.image.cloudSqlProxy.name }}
+          image: {{ .Values.image.cloudSqlProxy.image }}:{{ .Values.image.cloudSqlProxy.tag }}
+          command:
+            {{- range .Values.image.cloudSqlProxy.command }}
+            - 
+            {{- end }}
+          securityContext:
+            {{ .Values.securityContext }}
+          volumeMounts:
+            - name: {{ .Values.volumes.sqlVolume.name }}
+              mountPath: /secrets/
+              readOnly: true
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "0.25"
+      volumes:
+        - name: {{ .Values.volumes.sqlVolume.name }}
+          secret:
+            secretName: {{ .Values.volumes.sqlVolume.secretName }}

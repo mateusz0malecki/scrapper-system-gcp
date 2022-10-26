@@ -1,0 +1,93 @@
+replicaCount: 1
+
+image:
+  pracujScrapper:
+    name: app1
+    image: gcr.io/scrapper-system/pracuj-offers-scrapper
+    tag: v2
+    containerPort: 5000
+  pracujSubscriber:
+    name: app2
+    image: gcr.io/scrapper-system/pracuj-offers-db-handler
+    tag: v2
+    containerPort: 5001
+  pracaScrapper:
+    name: app3
+    image: gcr.io/scrapper-system/praca-offers-scrapper
+    tag: v2
+    containerPort: 5003
+  pracaSubscriber:
+    name: app4
+    image: gcr.io/scrapper-system/praca-offers-db-handler
+    tag: v2
+    containerPort: 5004
+  cloudSqlProxy:
+    name: cloud-sql-proxy
+    image: gcr.io/cloudsql-docker/gce-proxy
+    tag: 1.28.0
+    command:
+      - "/cloud_sql_proxy"
+      - "-ip_address_types=PRIVATE"
+      - "-log_debug_stdout"
+      - "-instances=scrapper-system:europe-central2:job-offers-pracuj-db=tcp:5432"
+      - "-credential_file=/secrets/service_account.json"
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: "scrapper-system-KSA"
+
+securityContext:
+  runAsNonRoot: true
+
+service:
+  pracujScrapper:
+    name: pracuj-scrapper
+    type: LoadBalancer
+    port: 80
+    targetPort: 5000
+  pracujSubscriber:
+    name: pracuj-subscriber
+    type: LoadBalancer
+    port: 80
+    targetPort: 5001
+  pracaScrapper:
+    name: praca-scrapper
+    type: LoadBalancer
+    port: 80
+    targetPort: 5002
+  pracaSubscriber:
+    name: praca-subscriber
+    type: LoadBalancer
+    port: 80
+    targetPort: 5003
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes:
+  sqlVolume:
+    name: sql-instance-secret-volume
+    secretName: sql-instance-secret
+

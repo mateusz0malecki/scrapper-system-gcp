@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.pracaScrapper.name }}
+spec:
+  type: {{ .Values.service.pracaScrapper.type }}
+  selector:
+    app1: job-offers-praca
+  ports:
+    - port: {{ .Values.service.pracaScrapper.port }}
+      targetPort: {{ .Values.service.pracaScrapper.targetPort }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.pracaSubscriber.name }}
+spec:
+  type: {{ .Values.service.pracaSubscriber.type }}
+  selector:
+    app2: job-offers-praca-subscriber
+  ports:
+    - port: {{ .Values.service.pracaSubscriber.port }}
+      targetPort: {{ .Values.service.pracaSubscriber.targetPort }}
