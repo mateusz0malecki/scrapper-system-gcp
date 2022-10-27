@@ -40,7 +40,7 @@ fullnameOverride: ""
 serviceAccount:
   create: false
   annotations: {}
-  name: "scrapper-system-KSA"
+  name: "scrapperSystemKSA"
 
 securityContext:
   runAsNonRoot: true

@@ -16,7 +16,6 @@ spec:
         app1: job-offers-praca
         app2: job-offers-praca-subscriber
     spec:
-      serviceAccountName: {{ include "scrapper-system-chart.serviceAccountName" . }}
       containers:
         - name: {{ .Values.image.pracaScrapper.name }}
           image: {{ .Values.image.pracaScrapper.image }}:{{ .Values.image.pracaScrapper.tag }}
@@ -24,22 +23,22 @@ spec:
             - containerPort: {{ .Values.image.pracaScrapper.containerPort }}
           env:
             - name: PORT
-              value: {{ .Values.image.pracaScrapper.containerPort }}
+              value: {{ quote .Values.image.pracaScrapper.containerPort }}
         - name: {{ .Values.image.pracaSubscriber.name }}
           image: {{ .Values.image.pracaSubscriber.image }}:{{ .Values.image.pracaSubscriber.tag }}
           ports:
             - containerPort: {{ .Values.image.pracaSubscriber.containerPort }}
           env:
             - name: PORT
-              value: {{ .Values.image.pracaSubscriber.containerPort }}
+              value: {{ quote .Values.image.pracaSubscriber.containerPort }}
         - name: {{ .Values.image.cloudSqlProxy.name }}
           image: {{ .Values.image.cloudSqlProxy.image }}:{{ .Values.image.cloudSqlProxy.tag }}
           command:
             {{- range .Values.image.cloudSqlProxy.command }}
-            -
+              - {{ . | quote }}
             {{- end }}
           securityContext:
-            {{ .Values.securityContext }}
+            runAsNonRoot: {{ .Values.securityContext.runAsNonRoot }}
           volumeMounts:
             - name: {{ .Values.volumes.sqlVolume.name }}
               mountPath: /secrets/
