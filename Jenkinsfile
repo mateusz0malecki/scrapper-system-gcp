@@ -12,10 +12,10 @@ pipeline {
     stage("Deploy") {
       steps {
         container("helm") {
-          sh "
+          sh """
           helm version
           kubectl version
-          "
+          """
         }
       }
     }
