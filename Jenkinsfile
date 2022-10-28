@@ -13,16 +13,18 @@ pipeline {
         container("gcloud") {
           sh '''
           cd microservices/job_offers_scrapper/praca
-          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper:$(sudo git rev-parse --short HEAD)"
+          git rev-parse --short HEAD
+          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper:$BUILD_VERSION"
           cd ..
           cd praca_subscriber
-          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler:$(sudo git rev-parse --short HEAD)"
+          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler:$BUILD_VERSION"
           cd ..
           cd pracuj
-          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper:$(sudo git rev-parse --short HEAD)"
+          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper:$BUILD_VERSION"
           cd ..
           cd pracuj_subscriber
-          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler:$(sudo git rev-parse --short HEAD)"
+          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler:$BUILD_VERSION"
           '''
         }
       }
