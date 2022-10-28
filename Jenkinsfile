@@ -1,20 +1,29 @@
 pipeline {
   agent {
     kubernetes {
-      // Without cloud, Jenkins will pick the first cloud in the list
-      cloud "test-cluster"
+      cloud "kubernetes-scrapper-system"
       label "jenkins-agent"
       yamlFile "jenkins-build-pod.yaml"
     }
   }
 
   stages {
+    stage("Build") {
+      steps {
+        container("gcloud") {
+          sh """
+          pwd
+          ls
+          """
+        }
+      }
+    }
     stage("Deploy") {
       steps {
         container("helm") {
           sh """
-          helm version
-          kubectl version
+          pwd
+          ls
           """
         }
       }
