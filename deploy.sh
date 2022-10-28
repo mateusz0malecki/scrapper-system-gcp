@@ -1,0 +1,1 @@
+sed -i "/^\([[:space:]]*tag: \).*/s//\1$(git rev-parse --short HEAD)/" scrapper-system-chart/values.yaml
