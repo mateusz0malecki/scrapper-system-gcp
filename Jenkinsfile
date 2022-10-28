@@ -11,10 +11,19 @@ pipeline {
     stage("Build") {
       steps {
         container("gcloud") {
-          sh """
-          pwd
-          ls
-          """
+//           sh """
+//           cd microservices/job_offers_scrapper/praca
+//           gcloud builds submit --tag gcr.io/scrapper-system/praca-offers-scrapper:v3
+//           cd ..
+//           cd praca_subscriber
+//           gcloud builds submit --tag gcr.io/scrapper-system/praca-offers-db-handler:v3
+//           cd ..
+//           cd pracuj
+//           gcloud builds submit --tag gcr.io/scrapper-system/pracuj-offers-scrapper:v3
+//           cd ..
+//           cd pracuj_subscriber
+//           gcloud builds submit --tag gcr.io/scrapper-system/pracuj-offers-db-handler:v3
+//           """
         }
       }
     }
@@ -22,8 +31,7 @@ pipeline {
       steps {
         container("helm") {
           sh """
-          pwd
-          ls
+          kubectl cluster-info
           """
         }
       }
