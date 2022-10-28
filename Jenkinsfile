@@ -11,14 +11,14 @@ pipeline {
     stage("Build") {
       steps {
         container("gcloud") {
-          build.sh
+          sh build.sh
         }
       }
     }
     stage("Deploy") {
       steps {
         container("helm") {
-          deploy.sh
+          sh deploy.sh
         }
       }
     }
