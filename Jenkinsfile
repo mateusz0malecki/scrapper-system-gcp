@@ -13,6 +13,7 @@ pipeline {
         container("gcloud") {
           sh '''
           cd microservices/job_offers_scrapper/praca
+          git config --global --add safe.directory /home/jenkins/agent/workspace/test-job
           git rev-parse --short HEAD
           export BUILD_VERSION=$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper:$BUILD_VERSION"
