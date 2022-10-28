@@ -34,6 +34,7 @@ pipeline {
       steps {
         container("helm") {
           sh '''
+          git config --global --add safe.directory /home/jenkins/agent/workspace/test-job
           sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart/values.yaml
           helm upgrade scrapper-system scrapper-system-chart/ --atomic --install
           '''
