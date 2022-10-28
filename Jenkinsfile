@@ -34,7 +34,7 @@ pipeline {
       steps {
         container("helm") {
           sh '''
-          sed -i "/^\([[:space:]]*tag: \).*/s//\1$(git rev-parse --short HEAD)/" scrapper-system-chart/values.yaml
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart/values.yaml
           helm upgrade scrapper-system scrapper-system-chart/ --atomic --install
           '''
         }
