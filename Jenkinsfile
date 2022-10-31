@@ -13,7 +13,7 @@ pipeline {
         container("gcloud") {
           sh '''
           cd microservices/job_offers_scrapper/praca
-          git config --global --add safe.directory /home/jenkins/agent/workspace/test-job
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
           git rev-parse --short HEAD
           export BUILD_VERSION=$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper:$BUILD_VERSION"
@@ -34,7 +34,7 @@ pipeline {
       steps {
         container("helm") {
           sh '''
-          git config --global --add safe.directory /home/jenkins/agent/workspace/test-job
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
           sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart/values.yaml
           helm upgrade scrapper-system scrapper-system-chart/ --atomic --install
           '''
