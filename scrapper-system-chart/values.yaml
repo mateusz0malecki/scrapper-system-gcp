@@ -8,9 +8,9 @@ apps:
       name: job-offers-praca-subscriber
   pracuj:
     app1:
-      name: job-offers-prauj
+      name: job-offers-pracuj
     app2:
-      name: job-offers-prauj-subscriber
+      name: job-offers-pracuj-subscriber
 
 image:
   pracujScrapper:
