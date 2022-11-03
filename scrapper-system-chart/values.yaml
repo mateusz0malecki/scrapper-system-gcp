@@ -1,5 +1,17 @@
 replicaCount: 1
 
+apps:
+  praca:
+    app1:
+      name: job-offers-praca
+    app2:
+      name: job-offers-praca-subscriber
+  pracuj:
+    app1:
+      name: job-offers-prauj
+    app2:
+      name: job-offers-prauj-subscriber
+
 image:
   pracujScrapper:
     name: app1

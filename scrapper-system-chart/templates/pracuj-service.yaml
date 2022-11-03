@@ -5,7 +5,7 @@ metadata:
 spec:
   type: {{ .Values.service.pracujScrapper.type }}
   selector:
-    app1: job-offers-pracuj
+    app1: {{ .Values.apps.pracuj.app1.name }}
   ports:
     - port: {{ .Values.service.pracujScrapper.port }}
       targetPort: {{ .Values.service.pracujScrapper.targetPort }}
@@ -19,7 +19,7 @@ metadata:
 spec:
   type: {{ .Values.service.pracujSubscriber.type }}
   selector:
-    app2: job-offers-pracuj-subscriber
+    app2: {{ .Values.apps.pracuj.app2.name }}
   ports:
     - port: {{ .Values.service.pracujSubscriber.port }}
       targetPort: {{ .Values.service.pracujSubscriber.targetPort }}

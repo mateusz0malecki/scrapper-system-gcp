@@ -8,13 +8,13 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app1: job-offers-praca
-      app2: job-offers-praca-subscriber
+      app1: {{ .Values.apps.praca.app1.name }}
+      app2: {{ .Values.apps.praca.app2.name }}
   template:
     metadata:
       labels:
-        app1: job-offers-praca
-        app2: job-offers-praca-subscriber
+        app1: {{ .Values.apps.praca.app1.name }}
+        app2: {{ .Values.apps.praca.app2.name }}
     spec:
       containers:
         - name: {{ .Values.image.pracaScrapper.name }}
