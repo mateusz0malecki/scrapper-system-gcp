@@ -70,15 +70,5 @@ pipeline {
         }
       }
     }
-    stage("Test helm") {
-      steps {
-        container("helm") {
-          sh '''
-          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
-          helm test scrapper-system
-          '''
-        }
-      }
-    }
   }
 }
