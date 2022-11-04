@@ -1,23 +1,25 @@
 replicaCount: 1
 
+namespace: prod
+
 apps:
-  praca:
+  pracuj:
     app1:
-      name: job-offers-praca-dev
+      name: job-offers-pracuj-prod
     app2:
-      name: job-offers-praca-subscriber-dev
+      name: job-offers-pracuj-subscriber-prod
 
 image:
-  pracaScrapper:
-    name: app3
-    image: gcr.io/scrapper-system/praca-offers-scrapper
+  pracujScrapper:
+    name: app1
+    image: gcr.io/scrapper-system/pracuj-offers-scrapper
     tag: v2
-    containerPort: 5003
-  pracaSubscriber:
-    name: app4
-    image: gcr.io/scrapper-system/praca-offers-db-handler
+    containerPort: 5000
+  pracujSubscriber:
+    name: app2
+    image: gcr.io/scrapper-system/pracuj-offers-db-handler
     tag: v2
-    containerPort: 5004
+    containerPort: 5001
   cloudSqlProxy:
     name: cloud-sql-proxy
     image: gcr.io/cloudsql-docker/gce-proxy
@@ -43,16 +45,16 @@ securityContext:
   runAsNonRoot: true
 
 service:
-  pracaScrapper:
-    name: praca-scrapper-dev
+  pracujScrapper:
+    name: pracuj-scrapper-prod
     type: LoadBalancer
     port: 80
-    targetPort: 5002
-  pracaSubscriber:
-    name: praca-subscriber-dev
+    targetPort: 5000
+  pracujSubscriber:
+    name: pracuj-subscriber-prod
     type: LoadBalancer
     port: 80
-    targetPort: 5003
+    targetPort: 5001
 
 ingress:
   enabled: false

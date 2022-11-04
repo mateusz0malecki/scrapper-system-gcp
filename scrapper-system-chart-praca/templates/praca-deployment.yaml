@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: praca-deployment
+  namespace: {{ .Values.namespace }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -45,8 +46,8 @@ spec:
               readOnly: true
           resources:
             requests:
-              memory: "2Gi"
-              cpu: "0.25"
+              memory: "0.5Gi"
+              cpu: "0.15"
       volumes:
         - name: {{ .Values.volumes.sqlVolume.name }}
           secret:
