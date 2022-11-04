@@ -64,18 +64,12 @@ pipeline {
         container("helm") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
-          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart/values.yaml
-          helm upgrade scrapper-system scrapper-system-chart/ --atomic --install
-          '''
-        }
-      }
-    }
-    stage("Test helm") {
-      steps {
-        container("helm") {
-          sh '''
-          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
-          helm test scrapper-system
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-praca/values-dev.yaml
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-praca/values-prod.yaml
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-pracuj/values-dev.yaml
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-pracuj/values-prod.yaml
+          helm upgrade scrapper-system-pracuj scrapper-system-chart-pracuj/ --atomic --install
+          helm upgrade scrapper-system-praca scrapper-system-chart-praca/ --atomic --install
           '''
         }
       }
