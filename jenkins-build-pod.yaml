@@ -4,6 +4,7 @@ metadata:
   namespace: dev
 spec:
   serviceAccountName: jenkins
+  namespace: dev
   containers:
     - name: gcloud
       image: gcr.io/cloud-builders/gcloud
