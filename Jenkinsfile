@@ -1,7 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      cloud "kubernetes-scrapper-system"
+      cloud "kubernetes-scrapper-system-dev"
       label "jenkins-agent"
       yamlFile "jenkins-build-pod.yaml"
     }
