@@ -1,11 +1,13 @@
 replicaCount: 1
 
+namespace: dev
+
 apps:
   pracuj:
     app1:
-      name: job-offers-pracuj-prod
+      name: job-offers-pracuj-dev
     app2:
-      name: job-offers-pracuj-subscriber-prod
+      name: job-offers-pracuj-subscriber-dev
 
 image:
   pracujScrapper:
@@ -44,12 +46,12 @@ securityContext:
 
 service:
   pracujScrapper:
-    name: pracuj-scrapper-prod
+    name: pracuj-scrapper-dev
     type: LoadBalancer
     port: 80
     targetPort: 5000
   pracujSubscriber:
-    name: pracuj-subscriber-prod
+    name: pracuj-subscriber-dev
     type: LoadBalancer
     port: 80
     targetPort: 5001
