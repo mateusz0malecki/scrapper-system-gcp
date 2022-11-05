@@ -1,11 +1,5 @@
 pipeline {
-  agent {
-    kubernetes {
-      cloud "kubernetes-scrapper-system"
-      label "jenkins-agent"
-      yamlFile "jenkins-build-pod.yaml"
-    }
-  }
+  agent none
   stages {
     stage("Build container scrapper praca") {
       agent {
