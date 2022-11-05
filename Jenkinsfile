@@ -8,6 +8,15 @@ pipeline {
   }
   stages {
     stage("Build container scrapper praca") {
+      agent {
+        kubernetes {
+          cloud "kubernetes-scrapper-system"
+          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+          yamlFile "jenkins-build-pod.yaml"
+          slaveConnectTimeout 300
+          idleMinutes 5
+        }
+      }
       steps {
         container("gcloud") {
           sh '''
@@ -21,6 +30,11 @@ pipeline {
       }
     }
     stage("Build container subscriber praca") {
+      agent {
+        kubernetes {
+          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+        }
+      }
       steps {
         container("gcloud") {
           sh '''
@@ -34,6 +48,11 @@ pipeline {
       }
     }
     stage("Build container scrapper pracuj") {
+      agent {
+        kubernetes {
+          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+        }
+      }
       steps {
         container("gcloud") {
           sh '''
@@ -47,6 +66,11 @@ pipeline {
       }
     }
     stage("Build container subscriber pracuj") {
+      agent {
+        kubernetes {
+          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+        }
+      }
       steps {
         container("gcloud") {
           sh '''
@@ -60,6 +84,15 @@ pipeline {
       }
     }
     stage("Deploy helm chart pracuj dev") {
+      agent {
+        kubernetes {
+          cloud "kubernetes-scrapper-system-dev"
+          label "jenkins-agent-dev-${env.BUILD_NUMBER}"
+          yamlFile "jenkins-build-pod-dev.yaml"
+          slaveConnectTimeout 300
+          idleMinutes 5
+        }
+      }
       when { branch 'dev' }
       steps {
         container("helm") {
@@ -72,6 +105,11 @@ pipeline {
       }
     }
     stage("Deploy helm chart praca dev") {
+      agent {
+        kubernetes {
+          label "jenkins-agent-dev-${env.BUILD_NUMBER}"
+        }
+      }
       when { branch 'dev' }
       steps {
         container("helm") {
@@ -84,6 +122,15 @@ pipeline {
       }
     }
     stage("Deploy helm chart pracuj prod") {
+      agent {
+        kubernetes {
+          cloud "kubernetes-scrapper-system-prod"
+          label "jenkins-agent-prod-${env.BUILD_NUMBER}"
+          yamlFile "jenkins-build-pod-prod.yaml"
+          slaveConnectTimeout 300
+          idleMinutes 5
+        }
+      }
       when { branch 'prod' }
       steps {
         container("helm") {
@@ -96,6 +143,11 @@ pipeline {
       }
     }
     stage("Deploy helm chart praca prod") {
+      agent {
+        kubernetes {
+          label "jenkins-agent-prod-${env.BUILD_NUMBER}"
+        }
+      }
       when { branch 'prod' }
       steps {
         container("helm") {

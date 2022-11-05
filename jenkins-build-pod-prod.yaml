@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+spec:
+  serviceAccountName: jenkins
+  namespace: prod
+  containers:
+    - name: gcloud
+      image: gcr.io/cloud-builders/gcloud
+      command: ['cat']
+      tty: true
+    - name: helm
+      image: dtzar/helm-kubectl
+      command: [ 'cat' ]
+      tty: true
