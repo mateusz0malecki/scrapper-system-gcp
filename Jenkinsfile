@@ -223,13 +223,13 @@ pipeline {
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           export BUILD_VERSION=$(git rev-parse --short HEAD)
           export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-dev --limit 1 --format="value(format('{0}',digest))")
-          yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-dev@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-dev:$(BUILD_VERSION)
+          yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-dev@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-dev:$BUILD_VERSION
           export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-dev --limit 1 --format="value(format('{0}',digest))")
-          yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-db-handler-dev@sha256:$NEW_TAG_PRACA_DB gcr.io/scrapper-system/praca-offers-db-handler-dev:$(BUILD_VERSION)
+          yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-db-handler-dev@sha256:$NEW_TAG_PRACA_DB gcr.io/scrapper-system/praca-offers-db-handler-dev:$BUILD_VERSION
           export NEW_TAG_PRACUJ_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-scrapper-dev --limit 1 --format="value(format('{0}',digest))")
-          yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-scrapper-dev@sha256:$NEW_TAG_PRACUJ_SCR gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$(BUILD_VERSION)
+          yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-scrapper-dev@sha256:$NEW_TAG_PRACUJ_SCR gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$BUILD_VERSION
           export NEW_TAG_PRACUJ_DB=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-db-handler-dev --limit 1 --format="value(format('{0}',digest))")
-          yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-db-handler-dev@sha256:$NEW_TAG_PRACUJ_DB gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$(BUILD_VERSION)
+          yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-db-handler-dev@sha256:$NEW_TAG_PRACUJ_DB gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$BUILD_VERSION
           '''
         }
       }
@@ -248,13 +248,13 @@ pipeline {
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           export BUILD_VERSION=$(git rev-parse --short HEAD)
           export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-prod --limit 1 --format="value(format('{0}',digest))")
-          yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-prod@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-prod:$(BUILD_VERSION)
+          yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-prod@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-prod:$BUILD_VERSION
           export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-prod --limit 1 --format="value(format('{0}',digest))")
-          yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-db-handler-prod@sha256:$NEW_TAG_PRACA_DB gcr.io/scrapper-system/praca-offers-db-handler-prod:$(BUILD_VERSION)
+          yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-db-handler-prod@sha256:$NEW_TAG_PRACA_DB gcr.io/scrapper-system/praca-offers-db-handler-prod:$BUILD_VERSION
           export NEW_TAG_PRACUJ_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-scrapper-prod --limit 1 --format="value(format('{0}',digest))")
-          yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-scrapper-prod@sha256:$NEW_TAG_PRACUJ_SCR gcr.io/scrapper-system/pracuj-offers-scrapper-prod:$(BUILD_VERSION)
+          yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-scrapper-prod@sha256:$NEW_TAG_PRACUJ_SCR gcr.io/scrapper-system/pracuj-offers-scrapper-prod:$BUILD_VERSION
           export NEW_TAG_PRACUJ_DB=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-db-handler-prod --limit 1 --format="value(format('{0}',digest))")
-          yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-db-handler-prod@sha256:$NEW_TAG_PRACUJ_DB gcr.io/scrapper-system/pracuj-offers-db-handler-prod:$(BUILD_VERSION)
+          yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-db-handler-prod@sha256:$NEW_TAG_PRACUJ_DB gcr.io/scrapper-system/pracuj-offers-db-handler-prod:$BUILD_VERSION
           '''
         }
       }
