@@ -1,7 +1,9 @@
 pipeline {
   agent none
   stages {
+
     stage("Build container scrapper praca dev") {
+      when { branch 'dev' }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system"
@@ -23,7 +25,9 @@ pipeline {
         }
       }
     }
+
     stage("Build container subscriber praca dev") {
+      when { branch 'dev' }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -41,7 +45,9 @@ pipeline {
         }
       }
     }
+
     stage("Build container scrapper pracuj dev") {
+      when { branch 'dev' }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -59,7 +65,9 @@ pipeline {
         }
       }
     }
+
     stage("Build container subscriber pracuj dev") {
+      when { branch 'dev' }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -77,7 +85,9 @@ pipeline {
         }
       }
     }
+
     stage("Build container scrapper praca prod") {
+      when { branch 'prod' }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system"
@@ -99,7 +109,9 @@ pipeline {
         }
       }
     }
+
     stage("Build container subscriber praca prod") {
+      when { branch 'prod' }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -117,7 +129,9 @@ pipeline {
         }
       }
     }
+
     stage("Build container scrapper pracuj prod") {
+      when { branch 'prod' }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -135,7 +149,9 @@ pipeline {
         }
       }
     }
+
     stage("Build container subscriber pracuj prod") {
+      when { branch 'prod' }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -153,8 +169,9 @@ pipeline {
         }
       }
     }
+
     stage("Deploy helm chart pracuj dev") {
-      when { branch 'origin/dev' }
+      when { branch 'dev' }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system-dev"
@@ -174,8 +191,9 @@ pipeline {
         }
       }
     }
+
     stage("Deploy helm chart praca dev") {
-      when { branch 'origin/dev' }
+      when { branch 'dev' }
       agent {
         kubernetes {
           label "jenkins-agent-dev-${env.BUILD_NUMBER}"
@@ -191,8 +209,9 @@ pipeline {
         }
       }
     }
+
     stage("Deploy helm chart pracuj prod") {
-      when { branch 'origin/prod' }
+      when { branch 'prod' }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system-prod"
@@ -212,8 +231,9 @@ pipeline {
         }
       }
     }
+
     stage("Deploy helm chart praca prod") {
-      when { branch 'origin/prod' }
+      when { branch 'prod' }
       agent {
         kubernetes {
           label "jenkins-agent-prod-${env.BUILD_NUMBER}"
