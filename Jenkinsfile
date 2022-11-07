@@ -1,7 +1,6 @@
 pipeline {
   agent none
   stages {
-
     stage("Build container scrapper praca dev") {
       when { branch 'dev' }
       when { changeset "microservices/job_offers_scrapper/praca/*"}
@@ -26,7 +25,6 @@ pipeline {
         }
       }
     }
-
     stage("Build container subscriber praca dev") {
       when { branch 'dev' }
       when { changeset "microservices/job_offers_scrapper/praca_subscriber/*"}
@@ -47,7 +45,6 @@ pipeline {
         }
       }
     }
-
     stage("Build container scrapper pracuj dev") {
       when { branch 'dev' }
       when { changeset "microservices/job_offers_scrapper/pracuj/*"}
@@ -68,7 +65,6 @@ pipeline {
         }
       }
     }
-
     stage("Build container subscriber pracuj dev") {
       when { branch 'dev' }
       when { changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"}
@@ -89,7 +85,6 @@ pipeline {
         }
       }
     }
-
     stage("Build container scrapper praca prod") {
       when { branch 'prod' }
       when { changeset "microservices/job_offers_scrapper/praca/*"}
@@ -114,7 +109,6 @@ pipeline {
         }
       }
     }
-
     stage("Build container subscriber praca prod") {
       when { branch 'prod' }
       when { changeset "microservices/job_offers_scrapper/praca_subscriber/*"}
@@ -135,7 +129,6 @@ pipeline {
         }
       }
     }
-
     stage("Build container scrapper pracuj prod") {
       when { branch 'prod' }
       when { changeset "microservices/job_offers_scrapper/pracuj/*"}
@@ -156,7 +149,6 @@ pipeline {
         }
       }
     }
-
     stage("Build container subscriber pracuj prod") {
       when { branch 'prod' }
       when { changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"}
@@ -177,7 +169,6 @@ pipeline {
         }
       }
     }
-
     stage("Add tags to container images dev") {
       when { branch 'dev' }
       agent {
@@ -202,7 +193,6 @@ pipeline {
         }
       }
     }
-
     stage("Add tags to container images prod") {
       when { branch 'prod' }
       agent {
@@ -227,7 +217,6 @@ pipeline {
         }
       }
     }
-
     stage("Deploy helm chart pracuj dev") {
       when { branch 'dev' }
       agent {
@@ -251,7 +240,6 @@ pipeline {
         }
       }
     }
-
     stage("Deploy helm chart praca dev") {
       when { branch 'dev' }
       agent {
@@ -270,7 +258,6 @@ pipeline {
         }
       }
     }
-
     stage("Deploy helm chart pracuj prod") {
       when { branch 'prod' }
       agent {
@@ -293,7 +280,6 @@ pipeline {
         }
       }
     }
-
     stage("Deploy helm chart praca prod") {
       when { branch 'prod' }
       agent {
