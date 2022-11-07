@@ -1,9 +1,14 @@
 pipeline {
   agent none
   stages {
+
     stage("Build container scrapper praca dev") {
-      when { branch 'dev' }
-      when { changeset "microservices/job_offers_scrapper/praca/*"}
+      when {
+       allOf {
+         branch 'dev'
+         changeset "microservices/job_offers_scrapper/praca/*"
+       }
+      }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system"
@@ -25,9 +30,14 @@ pipeline {
         }
       }
     }
+
     stage("Build container subscriber praca dev") {
-      when { branch 'dev' }
-      when { changeset "microservices/job_offers_scrapper/praca_subscriber/*"}
+      when {
+       allOf {
+         branch 'dev'
+         changeset "microservices/job_offers_scrapper/praca_subscriber/*"
+       }
+      }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -45,9 +55,14 @@ pipeline {
         }
       }
     }
+
     stage("Build container scrapper pracuj dev") {
-      when { branch 'dev' }
-      when { changeset "microservices/job_offers_scrapper/pracuj/*"}
+      when {
+       allOf {
+         branch 'dev'
+         changeset "microservices/job_offers_scrapper/pracuj/*"
+       }
+      }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -65,9 +80,14 @@ pipeline {
         }
       }
     }
+
     stage("Build container subscriber pracuj dev") {
-      when { branch 'dev' }
-      when { changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"}
+      when {
+       allOf {
+         branch 'dev'
+         changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
+       }
+      }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -85,9 +105,14 @@ pipeline {
         }
       }
     }
+
     stage("Build container scrapper praca prod") {
-      when { branch 'prod' }
-      when { changeset "microservices/job_offers_scrapper/praca/*"}
+      when {
+       allOf {
+         branch 'prod'
+         changeset "microservices/job_offers_scrapper/praca/*"
+       }
+      }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system"
@@ -109,9 +134,14 @@ pipeline {
         }
       }
     }
+
     stage("Build container subscriber praca prod") {
-      when { branch 'prod' }
-      when { changeset "microservices/job_offers_scrapper/praca_subscriber/*"}
+      when {
+       allOf {
+         branch 'prod'
+         changeset "microservices/job_offers_scrapper/praca_subscriber/*"
+       }
+      }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -129,9 +159,14 @@ pipeline {
         }
       }
     }
+
     stage("Build container scrapper pracuj prod") {
-      when { branch 'prod' }
-      when { changeset "microservices/job_offers_scrapper/pracuj/*"}
+      when {
+       allOf {
+         branch 'prod'
+         changeset "microservices/job_offers_scrapper/pracuj/*"
+       }
+      }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -149,9 +184,14 @@ pipeline {
         }
       }
     }
+
     stage("Build container subscriber pracuj prod") {
-      when { branch 'prod' }
-      when { changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"}
+      when {
+       allOf {
+         branch 'prod'
+         changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
+       }
+      }
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -169,6 +209,7 @@ pipeline {
         }
       }
     }
+
     stage("Add tags to container images dev") {
       when { branch 'dev' }
       agent {
@@ -193,6 +234,7 @@ pipeline {
         }
       }
     }
+
     stage("Add tags to container images prod") {
       when { branch 'prod' }
       agent {
@@ -217,6 +259,7 @@ pipeline {
         }
       }
     }
+
     stage("Deploy helm chart pracuj dev") {
       when { branch 'dev' }
       agent {
@@ -240,6 +283,7 @@ pipeline {
         }
       }
     }
+
     stage("Deploy helm chart praca dev") {
       when { branch 'dev' }
       agent {
@@ -258,6 +302,7 @@ pipeline {
         }
       }
     }
+
     stage("Deploy helm chart pracuj prod") {
       when { branch 'prod' }
       agent {
@@ -280,6 +325,7 @@ pipeline {
         }
       }
     }
+
     stage("Deploy helm chart praca prod") {
       when { branch 'prod' }
       agent {
