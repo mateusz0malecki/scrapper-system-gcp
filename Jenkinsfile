@@ -78,7 +78,7 @@ pipeline {
       }
     }
     stage("Deploy helm chart pracuj dev") {
-      when { branch 'dev' }
+      when { branch 'origin/dev' }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system-dev"
@@ -99,7 +99,7 @@ pipeline {
       }
     }
     stage("Deploy helm chart praca dev") {
-      when { branch 'dev' }
+      when { branch 'origin/dev' }
       agent {
         kubernetes {
           label "jenkins-agent-dev-${env.BUILD_NUMBER}"
@@ -116,7 +116,7 @@ pipeline {
       }
     }
     stage("Deploy helm chart pracuj prod") {
-      when { branch 'prod' }
+      when { branch 'origin/prod' }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system-prod"
@@ -137,7 +137,7 @@ pipeline {
       }
     }
     stage("Deploy helm chart praca prod") {
-      when { branch 'prod' }
+      when { branch 'origin/prod' }
       agent {
         kubernetes {
           label "jenkins-agent-prod-${env.BUILD_NUMBER}"
