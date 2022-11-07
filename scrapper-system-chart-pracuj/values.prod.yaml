@@ -23,7 +23,7 @@ image:
   cloudSqlProxy:
     name: cloud-sql-proxy
     image: gcr.io/cloudsql-docker/gce-proxy
-    tag: 1.28.0
+    tagCloud: 1.28.0
     command:
       - "/cloud_sql_proxy"
       - "-ip_address_types=PRIVATE"

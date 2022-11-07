@@ -33,7 +33,7 @@ spec:
             - name: PORT
               value: {{ quote .Values.image.pracaSubscriber.containerPort }}
         - name: {{ .Values.image.cloudSqlProxy.name }}
-          image: {{ .Values.image.cloudSqlProxy.image }}:{{ .Values.image.cloudSqlProxy.tag }}
+          image: {{ .Values.image.cloudSqlProxy.image }}:{{ .Values.image.cloudSqlProxy.tagCloud }}
           command:
             {{- range .Values.image.cloudSqlProxy.command }}
               - {{ . | quote }}
