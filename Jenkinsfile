@@ -1,7 +1,7 @@
 pipeline {
   agent none
   stages {
-    stage("Build container scrapper praca") {
+    stage("Build container scrapper praca dev") {
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system"
@@ -15,15 +15,15 @@ pipeline {
         container("gcloud") {
           sh '''
           cd microservices/job_offers_scrapper/praca
-          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
           export BUILD_VERSION=$(git rev-parse --short HEAD)
-          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper:$BUILD_VERSION"
+          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$BUILD_VERSION"
           '''
         }
       }
     }
-    stage("Build container subscriber praca") {
+    stage("Build container subscriber praca dev") {
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -33,15 +33,15 @@ pipeline {
         container("gcloud") {
           sh '''
           cd microservices/job_offers_scrapper/praca_subscriber
-          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
           export BUILD_VERSION=$(git rev-parse --short HEAD)
-          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler:$BUILD_VERSION"
+          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-dev:$BUILD_VERSION"
           '''
         }
       }
     }
-    stage("Build container scrapper pracuj") {
+    stage("Build container scrapper pracuj dev") {
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -51,15 +51,15 @@ pipeline {
         container("gcloud") {
           sh '''
           cd microservices/job_offers_scrapper/pracuj
-          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
           export BUILD_VERSION=$(git rev-parse --short HEAD)
-          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper:$BUILD_VERSION"
+          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$BUILD_VERSION"
           '''
         }
       }
     }
-    stage("Build container subscriber pracuj") {
+    stage("Build container subscriber pracuj dev") {
       agent {
         kubernetes {
           label "jenkins-agent-normal-${env.BUILD_NUMBER}"
@@ -69,10 +69,86 @@ pipeline {
         container("gcloud") {
           sh '''
           cd microservices/job_offers_scrapper/pracuj_subscriber
-          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
           export BUILD_VERSION=$(git rev-parse --short HEAD)
-          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler:$BUILD_VERSION"
+          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$BUILD_VERSION"
+          '''
+        }
+      }
+    }
+    stage("Build container scrapper praca prod") {
+      agent {
+        kubernetes {
+          cloud "kubernetes-scrapper-system"
+          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+          yamlFile "jenkins-build-pod.yaml"
+          slaveConnectTimeout 300
+          idleMinutes 5
+        }
+      }
+      steps {
+        container("gcloud") {
+          sh '''
+          cd microservices/job_offers_scrapper/praca
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
+          git rev-parse --short HEAD
+          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-prod:$BUILD_VERSION"
+          '''
+        }
+      }
+    }
+    stage("Build container subscriber praca prod") {
+      agent {
+        kubernetes {
+          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+        }
+      }
+      steps {
+        container("gcloud") {
+          sh '''
+          cd microservices/job_offers_scrapper/praca_subscriber
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
+          git rev-parse --short HEAD
+          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-prod:$BUILD_VERSION"
+          '''
+        }
+      }
+    }
+    stage("Build container scrapper pracuj prod") {
+      agent {
+        kubernetes {
+          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+        }
+      }
+      steps {
+        container("gcloud") {
+          sh '''
+          cd microservices/job_offers_scrapper/pracuj
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
+          git rev-parse --short HEAD
+          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-prod:$BUILD_VERSION"
+          '''
+        }
+      }
+    }
+    stage("Build container subscriber pracuj prod") {
+      agent {
+        kubernetes {
+          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+        }
+      }
+      steps {
+        container("gcloud") {
+          sh '''
+          cd microservices/job_offers_scrapper/pracuj_subscriber
+          git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
+          git rev-parse --short HEAD
+          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-prod:$BUILD_VERSION"
           '''
         }
       }
