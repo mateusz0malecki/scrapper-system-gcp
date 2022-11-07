@@ -13,12 +13,12 @@ image:
   pracaScrapper:
     name: app3
     image: gcr.io/scrapper-system/praca-offers-scrapper-prod
-    tag: v2
+    tag: 86a6fca
     containerPort: 5003
   pracaSubscriber:
     name: app4
     image: gcr.io/scrapper-system/praca-offers-db-handler-prod
-    tag: v2
+    tag: 86a6fca
     containerPort: 5004
   cloudSqlProxy:
     name: cloud-sql-proxy
