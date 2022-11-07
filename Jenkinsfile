@@ -185,7 +185,9 @@ pipeline {
         container("helm") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
+          git rev-parse --short HEAD
           sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-pracuj/values.dev.yaml
+          cat scrapper-system-chart-pracuj/values.dev.yaml
           helm upgrade scrapper-system-pracuj-dev scrapper-system-chart-pracuj/ --create-namespace -n dev -f scrapper-system-chart-pracuj/values.dev.yaml --atomic --install
           '''
         }
@@ -203,7 +205,9 @@ pipeline {
         container("helm") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
+          git rev-parse --short HEAD
           sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-praca/values.dev.yaml
+          cat scrapper-system-chart-praca/values.dev.yaml
           helm upgrade scrapper-system-praca-dev scrapper-system-chart-praca/ --create-namespace -n dev -f scrapper-system-chart-praca/values.dev.yaml --atomic --install
           '''
         }
@@ -225,6 +229,7 @@ pipeline {
         container("helm") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
+          git rev-parse --short HEAD
           sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-pracuj/values.prod.yaml
           helm upgrade scrapper-system-pracuj-prod scrapper-system-chart-pracuj/ --create-namespace -n prod -f scrapper-system-chart-pracuj/values.dev.yaml --atomic --install
           '''
@@ -243,6 +248,7 @@ pipeline {
         container("helm") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
+          git rev-parse --short HEAD
           sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-praca/values.prod.yaml
           helm upgrade scrapper-system-praca-prod scrapper-system-chart-praca/ --create-namespace -n prod -f scrapper-system-chart-praca/values.dev.yaml --atomic --install
           '''
