@@ -277,7 +277,6 @@ pipeline {
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
           sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$(git rev-parse --short HEAD)/" scrapper-system-chart-pracuj/values.dev.yaml
-          cat scrapper-system-chart-pracuj/values.dev.yaml
           helm upgrade scrapper-system-pracuj-dev scrapper-system-chart-pracuj/ --create-namespace -n dev -f scrapper-system-chart-pracuj/values.dev.yaml --atomic --install
           '''
         }
