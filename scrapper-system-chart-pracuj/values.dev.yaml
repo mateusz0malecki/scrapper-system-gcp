@@ -13,12 +13,12 @@ image:
   pracujScrapper:
     name: app1
     image: gcr.io/scrapper-system/pracuj-offers-scrapper-dev
-    tag: 1bf2203
+    tag: 2e91695
     containerPort: 5000
   pracujSubscriber:
     name: app2
     image: gcr.io/scrapper-system/pracuj-offers-db-handler-dev
-    tag: 1bf2203
+    tag: 2e91695
     containerPort: 5001
   cloudSqlProxy:
     name: cloud-sql-proxy
