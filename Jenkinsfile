@@ -171,7 +171,15 @@ pipeline {
     }
 
     stage("Add tags to container images dev") {
-      when { branch 'dev' }
+      when {
+        branch 'dev'
+        anyOf {
+          changeset "microservices/job_offers_scrapper/pracuj/*"
+          changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
+          changeset "microservices/job_offers_scrapper/praca/*"
+          changeset "microservices/job_offers_scrapper/praca_subscriber/*"
+        }
+      }
       steps {
         container("gcloud") {
           sh '''
@@ -191,7 +199,15 @@ pipeline {
     }
 
     stage("Add tags to container images prod") {
-      when { branch 'prod' }
+      when {
+        branch 'prod'
+        anyOf {
+          changeset "microservices/job_offers_scrapper/pracuj/*"
+          changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
+          changeset "microservices/job_offers_scrapper/praca/*"
+          changeset "microservices/job_offers_scrapper/praca_subscriber/*"
+        }
+      }
       steps {
         container("gcloud") {
           sh '''
@@ -211,7 +227,14 @@ pipeline {
     }
 
     stage("Deploy helm chart pracuj dev") {
-      when { branch 'dev' }
+      when {
+        beforeAgent true
+        branch 'dev'
+        anyOf {
+          changeset "microservices/job_offers_scrapper/pracuj/*"
+          changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
+        }
+      }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system-dev"
@@ -234,7 +257,14 @@ pipeline {
     }
 
     stage("Deploy helm chart praca dev") {
-      when { branch 'dev' }
+      when {
+        beforeAgent true
+        branch 'dev'
+        anyOf {
+          changeset "microservices/job_offers_scrapper/praca/*"
+          changeset "microservices/job_offers_scrapper/praca_subscriber/*"
+        }
+      }
       agent {
         kubernetes {
           label "jenkins-agent-dev-${env.BUILD_NUMBER}"
@@ -253,7 +283,14 @@ pipeline {
     }
 
     stage("Deploy helm chart pracuj prod") {
-      when { branch 'prod' }
+      when {
+        beforeAgent true
+        branch 'prod'
+        anyOf {
+          changeset "microservices/job_offers_scrapper/pracuj/*"
+          changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
+        }
+      }
       agent {
         kubernetes {
           cloud "kubernetes-scrapper-system-prod"
@@ -276,7 +313,14 @@ pipeline {
     }
 
     stage("Deploy helm chart praca prod") {
-      when { branch 'prod' }
+      when {
+        beforeAgent true
+        branch 'prod'
+        anyOf {
+          changeset "microservices/job_offers_scrapper/praca/*"
+          changeset "microservices/job_offers_scrapper/praca_subscriber/*"
+        }
+      }
       agent {
         kubernetes {
           label "jenkins-agent-prod-${env.BUILD_NUMBER}"
