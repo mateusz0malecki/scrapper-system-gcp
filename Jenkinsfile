@@ -237,7 +237,7 @@ pipeline {
       when { branch 'dev' }
       agent {
         kubernetes {
-          inheritFrom "jenkins-agent-dev-${env.BUILD_NUMBER}"
+          label "jenkins-agent-dev-${env.BUILD_NUMBER}"
         }
       }
       steps {
@@ -279,7 +279,7 @@ pipeline {
       when { branch 'prod' }
       agent {
         kubernetes {
-          inheritFrom "jenkins-agent-prod-${env.BUILD_NUMBER}"
+          label "jenkins-agent-prod-${env.BUILD_NUMBER}"
         }
       }
       steps {
