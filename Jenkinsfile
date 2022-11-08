@@ -1,5 +1,13 @@
 pipeline {
-  agent none
+  agent {
+    kubernetes {
+      cloud "kubernetes-scrapper-system"
+      label "jenkins-agent-normal-${env.BUILD_NUMBER}"
+      yamlFile "jenkins-build-pod.yaml"
+      slaveConnectTimeout 300
+      idleMinutes 5
+    }
+  }
   stages {
 
     stage("Build container scrapper praca dev") {
@@ -8,15 +16,6 @@ pipeline {
          branch 'dev'
          changeset "microservices/job_offers_scrapper/praca/*"
        }
-      }
-      agent {
-        kubernetes {
-          cloud "kubernetes-scrapper-system"
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-          yamlFile "jenkins-build-pod.yaml"
-          slaveConnectTimeout 300
-          idleMinutes 5
-        }
       }
       steps {
         container("gcloud") {
@@ -38,11 +37,6 @@ pipeline {
          changeset "microservices/job_offers_scrapper/praca_subscriber/*"
        }
       }
-      agent {
-        kubernetes {
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-        }
-      }
       steps {
         container("gcloud") {
           sh '''
@@ -62,11 +56,6 @@ pipeline {
          branch 'dev'
          changeset "microservices/job_offers_scrapper/pracuj/*"
        }
-      }
-      agent {
-        kubernetes {
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-        }
       }
       steps {
         container("gcloud") {
@@ -88,11 +77,6 @@ pipeline {
          changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
        }
       }
-      agent {
-        kubernetes {
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-        }
-      }
       steps {
         container("gcloud") {
           sh '''
@@ -112,15 +96,6 @@ pipeline {
          branch 'prod'
          changeset "microservices/job_offers_scrapper/praca/*"
        }
-      }
-      agent {
-        kubernetes {
-          cloud "kubernetes-scrapper-system"
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-          yamlFile "jenkins-build-pod.yaml"
-          slaveConnectTimeout 300
-          idleMinutes 5
-        }
       }
       steps {
         container("gcloud") {
@@ -142,11 +117,6 @@ pipeline {
          changeset "microservices/job_offers_scrapper/praca_subscriber/*"
        }
       }
-      agent {
-        kubernetes {
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-        }
-      }
       steps {
         container("gcloud") {
           sh '''
@@ -166,11 +136,6 @@ pipeline {
          branch 'prod'
          changeset "microservices/job_offers_scrapper/pracuj/*"
        }
-      }
-      agent {
-        kubernetes {
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-        }
       }
       steps {
         container("gcloud") {
@@ -192,11 +157,6 @@ pipeline {
          changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
        }
       }
-      agent {
-        kubernetes {
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-        }
-      }
       steps {
         container("gcloud") {
           sh '''
@@ -212,11 +172,6 @@ pipeline {
 
     stage("Add tags to container images dev") {
       when { branch 'dev' }
-      agent {
-        kubernetes {
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-        }
-      }
       steps {
         container("gcloud") {
           sh '''
@@ -237,11 +192,6 @@ pipeline {
 
     stage("Add tags to container images prod") {
       when { branch 'prod' }
-      agent {
-        kubernetes {
-          label "jenkins-agent-normal-${env.BUILD_NUMBER}"
-        }
-      }
       steps {
         container("gcloud") {
           sh '''
@@ -287,7 +237,7 @@ pipeline {
       when { branch 'dev' }
       agent {
         kubernetes {
-          label "jenkins-agent-dev-${env.BUILD_NUMBER}"
+          inheritFrom "jenkins-agent-dev-${env.BUILD_NUMBER}"
         }
       }
       steps {
@@ -329,7 +279,7 @@ pipeline {
       when { branch 'prod' }
       agent {
         kubernetes {
-          label "jenkins-agent-prod-${env.BUILD_NUMBER}"
+          inheritFrom "jenkins-agent-prod-${env.BUILD_NUMBER}"
         }
       }
       steps {
