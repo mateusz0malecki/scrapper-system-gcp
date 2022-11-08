@@ -233,6 +233,7 @@ pipeline {
         anyOf {
           changeset "microservices/job_offers_scrapper/pracuj/*"
           changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
+          changeset "scrapper-system-chart-pracuj/*"
         }
       }
       agent {
@@ -263,6 +264,7 @@ pipeline {
         anyOf {
           changeset "microservices/job_offers_scrapper/praca/*"
           changeset "microservices/job_offers_scrapper/praca_subscriber/*"
+          changeset "scrapper-system-chart-praca/*"
         }
       }
       agent {
@@ -289,6 +291,7 @@ pipeline {
         anyOf {
           changeset "microservices/job_offers_scrapper/pracuj/*"
           changeset "microservices/job_offers_scrapper/pracuj_subscriber/*"
+          changeset "scrapper-system-chart-pracuj/*"
         }
       }
       agent {
@@ -319,6 +322,7 @@ pipeline {
         anyOf {
           changeset "microservices/job_offers_scrapper/praca/*"
           changeset "microservices/job_offers_scrapper/praca_subscriber/*"
+          changeset "scrapper-system-chart-praca/*"
         }
       }
       agent {
