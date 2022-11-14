@@ -30,7 +30,6 @@ def index(client: StorageClient = Depends(get_client)):
         json.dump(results_list, file, default=str)
 
     client.upload()
-
     return {"time": str(datetime.utcnow() - start)}
 
 
