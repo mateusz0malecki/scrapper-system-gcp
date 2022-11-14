@@ -23,7 +23,7 @@ pipeline {
           cd microservices/job_offers_scrapper/praca
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$BUILD_VERSION"
           '''
         }
@@ -43,7 +43,7 @@ pipeline {
           cd microservices/job_offers_scrapper/praca_subscriber
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-dev:$BUILD_VERSION"
           '''
         }
@@ -63,7 +63,7 @@ pipeline {
           cd microservices/job_offers_scrapper/pracuj
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$BUILD_VERSION"
           '''
         }
@@ -83,7 +83,7 @@ pipeline {
           cd microservices/job_offers_scrapper/pracuj_subscriber
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$BUILD_VERSION"
           '''
         }
@@ -103,7 +103,7 @@ pipeline {
           cd microservices/job_offers_scrapper/praca
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-prod:$BUILD_VERSION"
           '''
         }
@@ -123,7 +123,7 @@ pipeline {
           cd microservices/job_offers_scrapper/praca_subscriber
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-prod:$BUILD_VERSION"
           '''
         }
@@ -143,7 +143,7 @@ pipeline {
           cd microservices/job_offers_scrapper/pracuj
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-prod:$BUILD_VERSION"
           '''
         }
@@ -163,7 +163,7 @@ pipeline {
           cd microservices/job_offers_scrapper/pracuj_subscriber
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-prod:$BUILD_VERSION"
           '''
         }
@@ -184,7 +184,7 @@ pipeline {
         container("gcloud") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-dev --limit 1 --format="value(format('{0}',digest))")
           yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-dev@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-dev:$BUILD_VERSION
           export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-dev --limit 1 --format="value(format('{0}',digest))")
@@ -212,7 +212,7 @@ pipeline {
         container("gcloud") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
-          export BUILD_VERSION=$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
           export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-prod --limit 1 --format="value(format('{0}',digest))")
           yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-prod@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-prod:$BUILD_VERSION
           export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-prod --limit 1 --format="value(format('{0}',digest))")
