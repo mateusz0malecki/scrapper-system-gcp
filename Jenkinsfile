@@ -23,7 +23,7 @@ pipeline {
           cd microservices/job_offers_scrapper/praca
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$BUILD_VERSION"
           '''
         }
@@ -43,7 +43,7 @@ pipeline {
           cd microservices/job_offers_scrapper/praca_subscriber
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-dev:$BUILD_VERSION"
           '''
         }
@@ -63,7 +63,7 @@ pipeline {
           cd microservices/job_offers_scrapper/pracuj
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$BUILD_VERSION"
           '''
         }
@@ -83,7 +83,7 @@ pipeline {
           cd microservices/job_offers_scrapper/pracuj_subscriber
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$BUILD_VERSION"
           '''
         }
@@ -103,7 +103,7 @@ pipeline {
           cd microservices/job_offers_scrapper/praca
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-prod:$BUILD_VERSION"
           '''
         }
@@ -123,7 +123,7 @@ pipeline {
           cd microservices/job_offers_scrapper/praca_subscriber
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-prod:$BUILD_VERSION"
           '''
         }
@@ -143,7 +143,7 @@ pipeline {
           cd microservices/job_offers_scrapper/pracuj
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-prod:$BUILD_VERSION"
           '''
         }
@@ -163,7 +163,7 @@ pipeline {
           cd microservices/job_offers_scrapper/pracuj_subscriber
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-prod:$BUILD_VERSION"
           '''
         }
@@ -184,7 +184,7 @@ pipeline {
         container("gcloud") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-dev --limit 1 --format="value(format('{0}',digest))")
           yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-dev@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-dev:$BUILD_VERSION
           export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-dev --limit 1 --format="value(format('{0}',digest))")
@@ -212,7 +212,7 @@ pipeline {
         container("gcloud") {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
-          export BUILD_VERSION=M-$(git rev-parse --short HEAD)
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
           export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-prod --limit 1 --format="value(format('{0}',digest))")
           yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-prod@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-prod:$BUILD_VERSION
           export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-prod --limit 1 --format="value(format('{0}',digest))")
@@ -250,7 +250,8 @@ pipeline {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\M-1$(git rev-parse --short HEAD)/" scrapper-system-chart-pracuj/values.dev.yaml
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$BUILD_VERSION/" scrapper-system-chart-pracuj/values.dev.yaml
           helm upgrade scrapper-system-pracuj-dev scrapper-system-chart-pracuj/ --create-namespace -n dev -f scrapper-system-chart-pracuj/values.dev.yaml --atomic --install
           '''
         }
@@ -277,7 +278,8 @@ pipeline {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_dev
           git rev-parse --short HEAD
-          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\M-1$(git rev-parse --short HEAD)/" scrapper-system-chart-praca/values.dev.yaml
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$BUILD_VERSION/" scrapper-system-chart-praca/values.dev.yaml
           helm upgrade scrapper-system-praca-dev scrapper-system-chart-praca/ --create-namespace -n dev -f scrapper-system-chart-praca/values.dev.yaml --atomic --install
           '''
         }
@@ -308,7 +310,8 @@ pipeline {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\M-1$(git rev-parse --short HEAD)/" scrapper-system-chart-pracuj/values.prod.yaml
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$BUILD_VERSION/" scrapper-system-chart-pracuj/values.prod.yaml
           helm upgrade scrapper-system-pracuj-prod scrapper-system-chart-pracuj/ --create-namespace -n prod -f scrapper-system-chart-pracuj/values.prod.yaml --atomic --install
           '''
         }
@@ -335,7 +338,8 @@ pipeline {
           sh '''
           git config --global --add safe.directory /home/jenkins/agent/workspace/scrapper-system-dev-prod_prod
           git rev-parse --short HEAD
-          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\M-1$(git rev-parse --short HEAD)/" scrapper-system-chart-praca/values.prod.yaml
+          export BUILD_VERSION=M$(git rev-parse --short HEAD)
+          sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$BUILD_VERSION/" scrapper-system-chart-praca/values.prod.yaml
           helm upgrade scrapper-system-praca-prod scrapper-system-chart-praca/ --create-namespace -n prod -f scrapper-system-chart-praca/values.prod.yaml --atomic --install
           '''
         }

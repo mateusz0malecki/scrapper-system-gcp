@@ -76,7 +76,6 @@ def handle_db(client: StorageClient = Depends(get_client)):
 
         db_session.commit()
         db_session.close()
-
     return {"time": str(datetime.utcnow() - start)}
 
 
