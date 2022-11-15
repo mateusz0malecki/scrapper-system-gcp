@@ -26,7 +26,7 @@ spec:
             - name: PORT
               value: {{ quote .Values.image.pracujScrapper.containerPort }}
           volumeMounts:
-            - name: credentials-storage-scrapper
+            - name: {{ .Values.volumes.storageVolume.name }}
               mountPath: /secrets/
               readOnly: true
         - name: {{ .Values.image.pracujSubscriber.name }}
@@ -37,7 +37,7 @@ spec:
             - name: PORT
               value: {{ quote .Values.image.pracujSubscriber.containerPort }}
           volumeMounts:
-            - name: credentials-storage-scrapper
+            - name: {{ .Values.volumes.storageVolume.name }}
               mountPath: /secrets/
               readOnly: true
         - name: {{ .Values.image.cloudSqlProxy.name }}
@@ -60,6 +60,6 @@ spec:
         - name: {{ .Values.volumes.sqlVolume.name }}
           secret:
             secretName: {{ .Values.volumes.sqlVolume.secretName }}
-        - name: credentials-storage-scrapper
+        - name: {{ .Values.volumes.storageVolume.name }}
           secret:
-            secretName: credentials-storage-scrapper
+            secretName: {{ .Values.volumes.storageVolume.secretName }}

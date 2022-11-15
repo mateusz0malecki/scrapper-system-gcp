@@ -79,4 +79,6 @@ volumes:
   sqlVolume:
     name: sql-instance-secret-volume
     secretName: sql-instance-secret
-
+  storageVolume:
+    name: credentials-storage-scrapper
+    secretName: credentials-storage-scrapper
