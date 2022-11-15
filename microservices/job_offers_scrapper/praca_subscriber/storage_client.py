@@ -1,7 +1,7 @@
 from functools import lru_cache
 from google.cloud import storage
 
-CREDENTIALS_FILE = 'credentials-storage-scrapper.json'
+CREDENTIALS_FILE = '/secrets/credentials-storage-scrapper.json'
 BLOB_NAME = f'job_offers_praca.json'
 BUCKET_NAME = 'job-offers-praca'
 

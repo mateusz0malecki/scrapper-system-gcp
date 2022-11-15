@@ -25,6 +25,10 @@ spec:
           env:
             - name: PORT
               value: {{ quote .Values.image.pracaScrapper.containerPort }}
+          volumeMounts:
+            - name: credentials-storage-scrapper
+              mountPath: /secrets/
+              readOnly: true
         - name: {{ .Values.image.pracaSubscriber.name }}
           image: {{ .Values.image.pracaSubscriber.image }}:{{ .Values.image.pracaSubscriber.tag }}
           ports:
@@ -32,6 +36,10 @@ spec:
           env:
             - name: PORT
               value: {{ quote .Values.image.pracaSubscriber.containerPort }}
+          volumeMounts:
+            - name: credentials-storage-scrapper
+              mountPath: /secrets/
+              readOnly: true
         - name: {{ .Values.image.cloudSqlProxy.name }}
           image: {{ .Values.image.cloudSqlProxy.image }}:{{ .Values.image.cloudSqlProxy.tagCloud }}
           command:
@@ -52,3 +60,6 @@ spec:
         - name: {{ .Values.volumes.sqlVolume.name }}
           secret:
             secretName: {{ .Values.volumes.sqlVolume.secretName }}
+        - name: credentials-storage-scrapper
+          secret:
+            secretName: credentials-storage-scrapper
