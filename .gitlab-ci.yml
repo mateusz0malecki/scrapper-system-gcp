@@ -4,6 +4,8 @@ stages:          # List of stages for jobs, and their order of execution
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
+  tags:
+    - gitlab-runner
   image: "gcr.io/cloud-builders/gcloud"
   script:
     - echo "Compiling the code..."
