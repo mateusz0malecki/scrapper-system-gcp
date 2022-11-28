@@ -1,9 +1,20 @@
-stages:          # List of stages for jobs, and their order of execution
-  - build
-  - deploy
+stages:
+  - build-dev
+  - deploy-dev
+  - build-prod
+  - deploy-prod
 
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
+.only-dev:
+  only:
+    - dev
+
+.only-prod:
+  only:
+    - prod
+
+build-dev:
+  stage: build-dev
+  extends: .only-dev
   tags:
     - gitlab-runner
   image: "gcr.io/cloud-builders/gcloud"
@@ -11,4 +22,3 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "Compiling the code..."
     - echo "Compile complete."
     - gcloud config get project
-    
