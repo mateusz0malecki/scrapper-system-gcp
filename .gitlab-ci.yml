@@ -20,7 +20,8 @@ build-dev:
     refs:
       - dev
     changes:
-      - microservices/job_offers_scrapper/praca/*
+      #- microservices/job_offers_scrapper/praca/*
+      - .gitlab-ci.yml
   tags:
     - gitlab-runner
   image: "gcr.io/cloud-builders/gcloud"
