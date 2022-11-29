@@ -16,8 +16,9 @@ build-dev:
     - gitlab-runner
   image: "gcr.io/cloud-builders/gcloud"
   script:
+    - echo $STORAGE_SA > credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca
-    - gcloud auth activate-service-account --key-file /tmp/$STORAGE_SA.json
     - gcloud config get account
     #- gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
 
