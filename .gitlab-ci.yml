@@ -16,7 +16,7 @@ build-dev:
     - gitlab-runner
   image: "gcr.io/cloud-builders/gcloud"
   script:
-    - cp $STORAGE_SA ~/credentials-storage-scrapper.json
+    - cp $CREDENTIALS_SA_GCP ~/credentials-storage-scrapper.json
     - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca
     - pwd
