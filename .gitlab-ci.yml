@@ -148,6 +148,9 @@ rename-containers-dev:
     - yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-scrapper-dev@sha256:$NEW_TAG_PRACUJ_SCR gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA
     - export NEW_TAG_PRACUJ_DB=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-db-handler-dev --limit 1 --format="value(format('{0}',digest))")
     - yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-db-handler-dev@sha256:$NEW_TAG_PRACUJ_DB gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$CI_COMMIT_SHORT_SHA
+    - echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    - echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    - echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 rename-containers-prod:
   stage: push-prod
