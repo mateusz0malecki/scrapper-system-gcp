@@ -9,6 +9,7 @@ from scrapper_links import get_links_to_offers_praca
 from storage_client import StorageClient, get_client, PATH_TO_FILE
 
 now = datetime.now()
+
 app = FastAPI()
 
 
