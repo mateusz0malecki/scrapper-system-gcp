@@ -6,17 +6,20 @@ stages:
 
 .only-dev:
   only:
-    - dev
+    refs:
+      - dev
 
 .only-prod:
   only:
-    - prod
+    refs:
+      - prod
 
 build-dev:
   stage: build-dev
-  extends: .only-dev
-  rules:
-    - changes:
+  only:
+    refs:
+      - dev
+    changes:
       - microservices/job_offers_scrapper/praca/*
   tags:
     - gitlab-runner
