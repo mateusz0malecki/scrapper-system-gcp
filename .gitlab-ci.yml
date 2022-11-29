@@ -21,3 +21,4 @@ build-dev:
     - cd microservices/job_offers_scrapper/praca
     - pwd
     - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
+    
