@@ -17,6 +17,7 @@ build-dev:
   image: "gcr.io/cloud-builders/gcloud"
   script:
     - echo $STORAGE_SA > credentials-storage-scrapper.json
+    - echo $STORAGE_SA
     - cat credentials-storage-scrapper.json
     - gcloud auth activate-service-account --key-file credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca
