@@ -1,23 +1,170 @@
 stages:
   - build-dev
-  - deploy-dev
   - build-prod
+  - deploy-dev
   - deploy-prod
 
-build-dev:
+image: "gcr.io/cloud-builders/gcloud"
+
+build-praca-scrapper-dev:
   stage: build-dev
   only:
     refs:
       - dev
     changes:
-      #- microservices/job_offers_scrapper/praca/*
-      - .gitlab-ci.yml
+      - microservices/job_offers_scrapper/praca/*
   tags:
     - gitlab-runner
-  image: "gcr.io/cloud-builders/gcloud"
   script:
-    - echo $GCP_SA
     - cp $GCP_SA ~/credentials-storage-scrapper.json
     - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca
     - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
+
+build-praca-subscriber-dev:
+  stage: build-dev
+  only:
+    refs:
+      - dev
+    changes:
+      - microservices/job_offers_scrapper/praca_subscriber/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - cd microservices/job_offers_scrapper/praca_subscriber
+    - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-dev:$CI_COMMIT_SHORT_SHA"
+
+build-pracuj-scrapper-dev:
+  stage: build-dev
+  only:
+    refs:
+      - dev
+    changes:
+      - microservices/job_offers_scrapper/pracuj/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - cd microservices/job_offers_scrapper/pracuj
+    - gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
+
+build-pracuj-subscriber-dev:
+  stage: build-dev
+  only:
+    refs:
+      - dev
+    changes:
+      - microservices/job_offers_scrapper/pracuj_subscriber/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - cd microservices/job_offers_scrapper/pracuj_subscriber
+    - gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$CI_COMMIT_SHORT_SHA"
+
+build-praca-scrapper-prod:
+  stage: build-prod
+  only:
+    refs:
+      - prod
+    changes:
+      - microservices/job_offers_scrapper/praca/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - cd microservices/job_offers_scrapper/praca
+    - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-prod:$CI_COMMIT_SHORT_SHA"
+
+build-praca-subscriber-prod:
+  stage: build-prod
+  only:
+    refs:
+      - prod
+    changes:
+      - microservices/job_offers_scrapper/praca_subscriber/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - cd microservices/job_offers_scrapper/praca_subscriber
+    - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-prod:$CI_COMMIT_SHORT_SHA"
+
+build-pracuj-scrapper-prod:
+  stage: build-prod
+  only:
+    refs:
+      - prod
+    changes:
+      - microservices/job_offers_scrapper/pracuj/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - cd microservices/job_offers_scrapper/pracuj
+    - gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-prod:$CI_COMMIT_SHORT_SHA"
+
+build-pracuj-subscriber-prod:
+  stage: build-prod
+  only:
+    refs:
+      - prod
+    changes:
+      - microservices/job_offers_scrapper/pracuj_subscriber/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - cd microservices/job_offers_scrapper/pracuj_subscriber
+    - gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-prod:$CI_COMMIT_SHORT_SHA"
+
+rename-containers-dev:
+  stage: build-dev
+  only:
+    refs:
+      - dev
+    changes:
+      - microservices/job_offers_scrapper/**/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-dev --limit 1 --format="value(format('{0}',digest))")
+    - yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-dev@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA
+    - export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-dev --limit 1 --format="value(format('{0}',digest))")
+    - yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-db-handler-dev@sha256:$NEW_TAG_PRACA_DB gcr.io/scrapper-system/praca-offers-db-handler-dev:$CI_COMMIT_SHORT_SHA
+    - export NEW_TAG_PRACUJ_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-scrapper-dev --limit 1 --format="value(format('{0}',digest))")
+    - yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-scrapper-dev@sha256:$NEW_TAG_PRACUJ_SCR gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA
+    - export NEW_TAG_PRACUJ_DB=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-db-handler-dev --limit 1 --format="value(format('{0}',digest))")
+    - yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-db-handler-dev@sha256:$NEW_TAG_PRACUJ_DB gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$CI_COMMIT_SHORT_SHA
+
+rename-containers-prod:
+  stage: build-prod
+  only:
+    refs:
+      - prod
+    changes:
+      - microservices/job_offers_scrapper/**/*
+  tags:
+    - gitlab-runner
+  script:
+    - cp $GCP_SA ~/credentials-storage-scrapper.json
+    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    - export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-prod --limit 1 --format="value(format('{0}',digest))")
+    - yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-prod@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-prod:$CI_COMMIT_SHORT_SHA
+    - export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-prod --limit 1 --format="value(format('{0}',digest))")
+    - yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-db-handler-prod@sha256:$NEW_TAG_PRACA_DB gcr.io/scrapper-system/praca-offers-db-handler-prod:$CI_COMMIT_SHORT_SHA
+    - export NEW_TAG_PRACUJ_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-scrapper-prod --limit 1 --format="value(format('{0}',digest))")
+    - yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-scrapper-prod@sha256:$NEW_TAG_PRACUJ_SCR gcr.io/scrapper-system/pracuj-offers-scrapper-prod:$CI_COMMIT_SHORT_SHA
+    - export NEW_TAG_PRACUJ_DB=$(gcloud container images list-tags gcr.io/scrapper-system/pracuj-offers-db-handler-prod --limit 1 --format="value(format('{0}',digest))")
+    - yes | gcloud container images add-tag gcr.io/scrapper-system/pracuj-offers-db-handler-prod@sha256:$NEW_TAG_PRACUJ_DB gcr.io/scrapper-system/pracuj-offers-db-handler-prod:$CI_COMMIT_SHORT_SHA
+          
