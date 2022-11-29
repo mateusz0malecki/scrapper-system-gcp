@@ -4,16 +4,6 @@ stages:
   - build-prod
   - deploy-prod
 
-.only-dev:
-  only:
-    refs:
-      - dev
-
-.only-prod:
-  only:
-    refs:
-      - prod
-
 build-dev:
   stage: build-dev
   only:
@@ -27,5 +17,6 @@ build-dev:
   image: "gcr.io/cloud-builders/gcloud"
   script:
     - cd microservices/job_offers_scrapper/praca
-    - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
+    - gcloud config get account
+    #- gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
 
