@@ -20,5 +20,5 @@ build-dev:
     - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca
     - gcloud config get account
-    #- gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
+    - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
 
