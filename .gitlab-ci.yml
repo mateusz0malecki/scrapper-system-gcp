@@ -1,6 +1,8 @@
 stages:
   - build-dev
   - build-prod
+  - push-dev
+  - push-prod
   - deploy-dev
   - deploy-prod
 
