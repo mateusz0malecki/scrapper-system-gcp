@@ -183,7 +183,7 @@ deploy-helm-chart-praca-dev:
   script:
     - cp $GCP_SA ~/credentials-storage-scrapper.json
     - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
-    - sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$CI_COMMIT_SHORT_SHA/" scrapper-system-chart-praca/values.dev.yaml
+    - sed -i "/^\\([[:space:]]*tag:\\).*/s//\\1$CI_COMMIT_SHORT_SHA/" scrapper-system-chart-praca/values.dev.yaml
     - helm upgrade scrapper-system-praca-dev scrapper-system-chart-praca/ --create-namespace -n dev -f scrapper-system-chart-praca/values.dev.yaml --atomic --install     
 
 deploy-helm-chart-pracuj-dev:
@@ -201,7 +201,7 @@ deploy-helm-chart-pracuj-dev:
   script:
     - cp $GCP_SA ~/credentials-storage-scrapper.json
     - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
-    - sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$CI_COMMIT_SHORT_SHA/" scrapper-system-chart-pracuj/values.dev.yaml
+    - sed -i "/^\\([[:space:]]*tag:\\).*/s//\\1$CI_COMMIT_SHORT_SHA/" scrapper-system-chart-pracuj/values.dev.yaml
     - helm upgrade scrapper-system-pracuj-dev scrapper-system-chart-pracuj/ --create-namespace -n dev -f scrapper-system-chart-pracuj/values.dev.yaml --atomic --install  
 
 deploy-helm-chart-praca-prod:
@@ -219,7 +219,7 @@ deploy-helm-chart-praca-prod:
   script:
     - cp $GCP_SA ~/credentials-storage-scrapper.json
     - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
-    - sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$CI_COMMIT_SHORT_SHA/" scrapper-system-chart-praca/values.prod.yaml
+    - sed -i "/^\\([[:space:]]*tag:\\).*/s//\\1$CI_COMMIT_SHORT_SHA/" scrapper-system-chart-praca/values.prod.yaml
     - helm upgrade scrapper-system-praca-prod scrapper-system-chart-praca/ --create-namespace -n prod -f scrapper-system-chart-praca/values.prod.yaml --atomic --install     
 
 deploy-helm-chart-pracuj-prod:
@@ -237,5 +237,6 @@ deploy-helm-chart-pracuj-prod:
   script:
     - cp $GCP_SA ~/credentials-storage-scrapper.json
     - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
-    - sed -i "/^\\([[:space:]]*tag: \\).*/s//\\1$CI_COMMIT_SHORT_SHA/" scrapper-system-chart-pracuj/values.prod.yaml
-    - helm upgrade scrapper-system-pracuj-prod scrapper-system-chart-pracuj/ --create-namespace -n prod -f scrapper-system-chart-pracuj/values.prod.yaml --atomic --install      
+    - sed -i "/^\\([[:space:]]*tag:\\).*/s//\\1$CI_COMMIT_SHORT_SHA/" scrapper-system-chart-pracuj/values.prod.yaml
+    - helm upgrade scrapper-system-pracuj-prod scrapper-system-chart-pracuj/ --create-namespace -n prod -f scrapper-system-chart-pracuj/values.prod.yaml --atomic --install    
+      
