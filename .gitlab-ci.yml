@@ -13,13 +13,13 @@ build-praca-scrapper-dev:
   only:
     refs:
       - dev
-    changes:
-      - microservices/job_offers_scrapper/praca/*
+    #changes:
+    #  - microservices/job_offers_scrapper/praca/*
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
+    #- cp $GCP_SA ~/credentials-storage-scrapper.json
+    #- gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca
     - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
 
