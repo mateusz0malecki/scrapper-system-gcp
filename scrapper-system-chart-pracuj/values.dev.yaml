@@ -31,7 +31,6 @@ image:
       - "-instances=scrapper-system:europe-central2:job-offers-pracuj-db=tcp:5432"
       - "-credential_file=/secrets/service_account.json"
 
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

@@ -100,7 +100,7 @@ deploy-helm-chart-praca-dev:
     changes:
       - microservices/job_offers_scrapper/praca/*
       - microservices/job_offers_scrapper/praca_subscriber/*
-      - scrapper-system-chart-praca/*
+      - scrapper-system-chart-praca/**/*
   tags:
     - gitlab-runner-dev
   image: "dtzar/helm-kubectl"
@@ -116,7 +116,7 @@ deploy-helm-chart-pracuj-dev:
     changes:
       - microservices/job_offers_scrapper/pracuj/*
       - microservices/job_offers_scrapper/pracuj_subscriber/*
-      - scrapper-system-chart-pracuj/*
+      - scrapper-system-chart-pracuj/**/*
   tags:
     - gitlab-runner-dev
   image: "dtzar/helm-kubectl"
@@ -132,7 +132,7 @@ deploy-helm-chart-praca-prod:
     changes:
       - microservices/job_offers_scrapper/praca/*
       - microservices/job_offers_scrapper/praca_subscriber/*
-      - scrapper-system-chart-praca/*
+      - scrapper-system-chart-praca/**/*
   tags:
     - gitlab-runner-prod
   image: "dtzar/helm-kubectl"
@@ -148,7 +148,7 @@ deploy-helm-chart-pracuj-prod:
     changes:
       - microservices/job_offers_scrapper/pracuj/*
       - microservices/job_offers_scrapper/pracuj_subscriber/*
-      - scrapper-system-chart-pracuj/*
+      - scrapper-system-chart-pracuj/**/*
   tags:
     - gitlab-runner-prod
   image: "dtzar/helm-kubectl"
