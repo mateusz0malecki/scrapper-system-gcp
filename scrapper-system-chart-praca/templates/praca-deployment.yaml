@@ -21,7 +21,7 @@ spec:
         - name: {{ .Values.image.pracaScrapper.name }}
           image: {{ .Values.image.pracaScrapper.image }}:{{ .Values.image.pracaScrapper.tag }}
           ports:
-            - containerPort: {{ .Values.image.pracaScrapper.containerPort }}
+            - containerPort: { { .Values.image.pracaScrapper.containerPort } }
           env:
             - name: PORT
               value: {{ quote .Values.image.pracaScrapper.containerPort }}
@@ -32,7 +32,7 @@ spec:
         - name: {{ .Values.image.pracaSubscriber.name }}
           image: {{ .Values.image.pracaSubscriber.image }}:{{ .Values.image.pracaSubscriber.tag }}
           ports:
-            - containerPort: {{ .Values.image.pracaSubscriber.containerPort }}
+            - containerPort: { { .Values.image.pracaSubscriber.containerPort } }
           env:
             - name: PORT
               value: {{ quote .Values.image.pracaSubscriber.containerPort }}
