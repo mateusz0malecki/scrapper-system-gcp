@@ -13,13 +13,11 @@ build-praca-scrapper-dev:
   only:
     refs:
       - dev
-    #changes:
-    #  - microservices/job_offers_scrapper/praca/*
+    changes:
+      - microservices/job_offers_scrapper/praca/*
   tags:
     - gitlab-runner
   script:
-    #- cp $GCP_SA ~/credentials-storage-scrapper.json
-    #- gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca
     - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
 
@@ -33,8 +31,6 @@ build-praca-subscriber-dev:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca_subscriber
     - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-dev:$CI_COMMIT_SHORT_SHA"
 
@@ -48,8 +44,6 @@ build-pracuj-scrapper-dev:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/pracuj
     - gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
 
@@ -63,8 +57,6 @@ build-pracuj-subscriber-dev:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/pracuj_subscriber
     - gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-dev:$CI_COMMIT_SHORT_SHA"
 
@@ -78,8 +70,6 @@ build-praca-scrapper-prod:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca
     - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-scrapper-prod:$CI_COMMIT_SHORT_SHA"
 
@@ -93,8 +83,6 @@ build-praca-subscriber-prod:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/praca_subscriber
     - gcloud builds submit --tag "gcr.io/scrapper-system/praca-offers-db-handler-prod:$CI_COMMIT_SHORT_SHA"
 
@@ -108,8 +96,6 @@ build-pracuj-scrapper-prod:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/pracuj
     - gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-scrapper-prod:$CI_COMMIT_SHORT_SHA"
 
@@ -123,8 +109,6 @@ build-pracuj-subscriber-prod:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - cd microservices/job_offers_scrapper/pracuj_subscriber
     - gcloud builds submit --tag "gcr.io/scrapper-system/pracuj-offers-db-handler-prod:$CI_COMMIT_SHORT_SHA"
 
@@ -138,8 +122,6 @@ rename-containers-dev:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-dev --limit 1 --format="value(format('{0}',digest))")
     - yes | gcloud container images add-tag "gcr.io/scrapper-system/praca-offers-scrapper-dev@sha256:$NEW_TAG_PRACA_SCR" "gcr.io/scrapper-system/praca-offers-scrapper-dev:$CI_COMMIT_SHORT_SHA"
     - export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-dev --limit 1 --format="value(format('{0}',digest))")
@@ -159,8 +141,6 @@ rename-containers-prod:
   tags:
     - gitlab-runner
   script:
-    - cp $GCP_SA ~/credentials-storage-scrapper.json
-    - gcloud auth activate-service-account --key-file ~/credentials-storage-scrapper.json
     - export NEW_TAG_PRACA_SCR=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-scrapper-prod --limit 1 --format="value(format('{0}',digest))")
     - yes | gcloud container images add-tag gcr.io/scrapper-system/praca-offers-scrapper-prod@sha256:$NEW_TAG_PRACA_SCR gcr.io/scrapper-system/praca-offers-scrapper-prod:$CI_COMMIT_SHORT_SHA
     - export NEW_TAG_PRACA_DB=$(gcloud container images list-tags gcr.io/scrapper-system/praca-offers-db-handler-prod --limit 1 --format="value(format('{0}',digest))")
