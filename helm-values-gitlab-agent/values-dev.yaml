@@ -524,7 +524,7 @@ runners:
 
   ## Service Account to be used for runners
   ##
-  # serviceAccountName:
+  serviceAccountName: jenkins
 
   ## If Gitlab is not reachable through $CI_SERVER_URL
   ##
